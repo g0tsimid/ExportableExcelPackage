@@ -1,14 +1,15 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+VisualStudioVersion = 12.0.40629.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ExportableExcelPackage", "ExportableExcelPackage\ExportableExcelPackage.csproj", "{6BBAE432-DA81-4C28-A235-2841195402F0}"
 EndProject
-Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ExcelPackageTestSite(1)", "http://localhost:14209", "{DEDE92B7-5507-4D79-85EF-AAE785ACDBAB}"
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "ExcelPackageTestSite", "http://localhost:14209", "{DEDE92B7-5507-4D79-85EF-AAE785ACDBAB}"
 	ProjectSection(WebsiteProperties) = preProject
 		UseIISExpress = "true"
 		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.5"
+		ProjectReferences = "{6bbae432-da81-4c28-a235-2841195402f0}|ExportableExcelPackage.dll;"
 		Debug.AspNetCompiler.VirtualPath = "/localhost_14209"
 		Debug.AspNetCompiler.PhysicalPath = "ExcelPackageTestSite\"
 		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_14209\"

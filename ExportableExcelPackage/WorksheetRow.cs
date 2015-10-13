@@ -14,7 +14,7 @@ namespace ExportableExcelPackage
     /// </summary>
     [ParseChildren(true)]
     [PersistChildren(true)]
-    public class WorksheetRow : WorksheetItem
+    public class WorksheetRow : WorksheetItem, INamingContainer
     {
         private List<WorksheetItem> items;
         /// <summary>

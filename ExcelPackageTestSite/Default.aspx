@@ -11,6 +11,9 @@
 
     <div class="row">
         <div class="col-md-4">
+            <asp:ObjectDataSource runat="server" ID="SampleData" TypeName="SampleModel" SelectMethod="GetData">
+                
+            </asp:ObjectDataSource>
             <xlp:ExcelPackage runat="server" ID="ExcelPackage">
                 <Worksheets>
                     <xlp:Worksheet runat="server" ID="Worksheet1" SheetName="Weekly">
@@ -41,6 +44,11 @@
                                     <xlp:NumberCell runat="server" Value="10" /> 
                                 </Items>
                             </xlp:WorksheetRow>
+                            <xlp:WorksheetTable runat="server" DataSourceID="SampleData">
+                                <Columns>
+                                    <xlp:NumberCell runat="server" Value='<%# Eval("BaseFee") %>' />
+                                </Columns>
+                            </xlp:WorksheetTable>
                         </Items>
                     </xlp:Worksheet>
                 </Worksheets>

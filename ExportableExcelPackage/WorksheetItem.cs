@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.UI;
 using System.Web.UI.WebControls;
 using System.Windows.Forms;
 using OfficeOpenXml;
@@ -12,8 +13,12 @@ namespace ExportableExcelPackage
     /// <summary>
     /// A base interface for an item than can appear on a worksheet.
     /// </summary>
-    public abstract class WorksheetItem : WebControl
+    public abstract class WorksheetItem : WebControl, IDataItemContainer
     {
+        public object DataItem { get; set; }
+        public int DataItemIndex { get; set; }
+        public int DisplayIndex { get; set; }
+
         /// <summary>
         /// The 0-based row number for the top-left position of the item, if applicable.
         /// </summary>

@@ -16,7 +16,7 @@ namespace ExportableExcelPackage
     /// </summary>
     [ParseChildren(true)]
     [PersistChildren(true)]
-    public class Worksheet : WebControl
+    public class Worksheet : WebControl, INamingContainer
     {
         private WorksheetItemCollection items;
         /// <summary>

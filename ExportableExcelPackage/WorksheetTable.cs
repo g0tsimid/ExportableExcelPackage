@@ -16,21 +16,32 @@ namespace ExportableExcelPackage
     /// A bindable table with named column definitions which can be configured to display
     /// conditionally.
     /// </summary>
-    [DefaultProperty("Grid")]
     [ParseChildren(true)]
     [PersistChildren(true)]
-    [ToolboxData("<{0}:Table runat=server></{0}:Table>")]
-    public class WorksheetTable : WorksheetItem, IDataBoundControl
+    [DefaultProperty("Columns")]
+    public class WorksheetTable : WorksheetItem, INamingContainer, IDataBoundControl
     {
+        private WorksheetTableGrid grid;
         /// <summary>
         /// Need an item that is CompositeDataBoundControl, and don't really want to make WorksheetItem extend it.
         /// </summary>
-        public WorksheetTableGrid Grid { get; set; }
+        public WorksheetTableGrid Grid {
+            get
+            {
+                return grid ?? (grid = new WorksheetTableGrid());
+            }
+            set
+            {
+                grid = value;
+            }
+        }
 
         /// <summary>
         /// The collection of columns contained in this table.
         /// </summary>
-        public WorksheetRow Columns {
+        [PersistenceMode(PersistenceMode.InnerDefaultProperty)]
+        [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
+        public List<WorksheetItem> Columns {
             get
             {
                 return Grid.Columns;
@@ -41,7 +52,10 @@ namespace ExportableExcelPackage
             }
         }
 
-        public virtual TableRowCollection Rows
+        /// <summary>
+        /// The collection of rows contained in this table.
+        /// </summary>
+        public virtual List<WorksheetRow> Rows
         {
             get
             {
@@ -49,32 +63,34 @@ namespace ExportableExcelPackage
             }
         }
 
-        protected override void RenderContents(HtmlTextWriter output)
-        {
-
-        }
-
         public override ExcelCellAddress AddItemToWorksheet(ExcelWorksheet worksheet)
         {
-            foreach (WorksheetItem column in Columns.Items)
+            DataBind();
+            Grid.DataBind();
+            int i = Row;
+            ExcelCellAddress result = null;
+
+            if (Rows.Count > 0)
             {
-                
+                // Add all rows from the grid to the worksheet.
+                foreach (WorksheetItem item in Columns)
+                {
+                    // Render the header row first.
+                }
+                i++;
             }
-            throw new NotImplementedException();
+
+            foreach (WorksheetRow row in Rows)
+            {
+                row.Row = i;
+                row.Column = Column;
+                result = row.AddItemToWorksheet(worksheet);
+            }
+            return result;
         }
 
-        public string[] DataKeyNames
-        {
-            get
-            {
-                throw new NotImplementedException();
-            }
-            set
-            {
-                throw new NotImplementedException();
-            }
-        }
-
+        [Bindable(true)]
+        [PersistenceMode(PersistenceMode.Attribute)]
         public string DataMember
         {
             get
@@ -99,6 +115,8 @@ namespace ExportableExcelPackage
             }
         }
 
+        [Bindable(true)]
+        [PersistenceMode(PersistenceMode.Attribute)]
         public string DataSourceID
         {
             get
@@ -113,7 +131,14 @@ namespace ExportableExcelPackage
 
         public IDataSource DataSourceObject
         {
-            get { return Grid.DataSourceObject }
+            get { return Grid.DataSourceObject; }
         }
+
+        protected override void RenderContents(HtmlTextWriter output)
+        {
+
+        }
+
+        public string[] DataKeyNames { get; set; }
     }
 }

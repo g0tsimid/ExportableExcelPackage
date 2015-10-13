@@ -14,23 +14,60 @@ namespace ExportableExcelPackage
     [ToolboxData("<{0}:WorksheetTableGrid runat=server></{0}:WorksheetTableGrid>")]
     public class WorksheetTableGrid : CompositeDataBoundControl, INamingContainer
     {
-        protected Table table = new Table();
+        private List<WorksheetItem> columns;
+        private List<WorksheetRow> rows;
         /// <summary>
         /// The collection of columns contained in this grid.
         /// </summary>
-        public WorksheetRow Columns { get; set; }
+        public List<WorksheetItem> Columns {
+            get
+            {
+                return columns ?? (columns = new List<WorksheetItem>());
+            }
+            set
+            {
+                columns = value;
+            }
+        }
 
-        public virtual TableRowCollection Rows
+        public virtual List<WorksheetRow> Rows
         {
             get
             {
-                return table.Rows;
+                return rows ?? (rows = new List<WorksheetRow>());
             }
         }
 
         protected override void RenderContents(HtmlTextWriter output)
         {
-            output.Write(Text);
+            
+        }
+
+        protected override int CreateChildControls(System.Collections.IEnumerable dataSource, bool dataBinding)
+        {
+            if (dataBinding)
+            {
+                Rows.Clear();
+            }
+            int count = 0;
+            if (dataSource != null)
+            {
+                foreach (object dataItem in dataSource)
+                {
+                    WorksheetRow row = new WorksheetRow();
+                    row.DataItem = dataItem;
+                    foreach (WorksheetItem item in Columns)
+                    {
+                        item.DataItem = dataItem;
+                        item.DataItemIndex = count++;
+                        item.DisplayIndex = item.DataItemIndex;
+                        row.Items.Add(item);
+                        item.DataBind();
+                    }
+                }
+            }
+            
+            return count;
         }
     }
 }
