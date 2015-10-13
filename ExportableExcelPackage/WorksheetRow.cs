@@ -41,17 +41,19 @@ namespace ExportableExcelPackage
                 return items ?? (items = new List<WorksheetItem>());
             }
         }
-        public override void AddItemToWorksheet(ExcelWorksheet worksheet)
+        public override ExcelCellAddress AddItemToWorksheet(ExcelWorksheet worksheet)
         {
             int i = 0;
+            ExcelCellAddress result = null;
             foreach (WorksheetItem item in Items)
             {
                 item.Row = Row; // Inner cells should not have this defined.
                 // Auto-generate column numbers, if not specified.
                 item.Column = item.Column > 0 && item.Column != i ? item.Column : i;
-                item.AddItemToWorksheet(worksheet);
+                result = item.AddItemToWorksheet(worksheet);
                 ++i;
             }
+            return result;
         }
 
 

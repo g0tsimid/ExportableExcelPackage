@@ -11,11 +11,17 @@ using OfficeOpenXml;
 
 namespace ExportableExcelPackage
 {
+    /// <summary>
+    /// A single worksheet that comprises part of an excel workbook.
+    /// </summary>
     [ParseChildren(true)]
     [PersistChildren(true)]
     public class Worksheet : WebControl
     {
-        private ItemCollection items;
+        private WorksheetItemCollection items;
+        /// <summary>
+        /// The name that should be assigned to this worksheet.
+        /// </summary>
         public string SheetName
         {
             get
@@ -27,27 +33,36 @@ namespace ExportableExcelPackage
                 ViewState["SheetName"] = value;
             }
         }
-
+        /// <summary>
+        /// The collection of items on this worksheet.
+        /// </summary>
         [PersistenceMode(PersistenceMode.InnerProperty)]
         [DesignerSerializationVisibility(DesignerSerializationVisibility.Content)]
-        public ItemCollection Items {
+        public WorksheetItemCollection Items {
             get
             {
-                return items ?? (items = new ItemCollection());
+                return items ?? (items = new WorksheetItemCollection());
             }
         }
 
         protected override void RenderContents(HtmlTextWriter output)
         {
-            
+            throw new NotImplementedException();
         }
 
-        public void AddItemsToWorksheet(ExcelWorksheet worksheet)
+        public ExcelCellAddress AddItemsToWorksheet(ExcelWorksheet worksheet)
         {
+            ExcelCellAddress result = null;
+            int i = 0;
+            // Add each individual item to the worksheet.
             foreach (WorksheetItem item in Items)
             {
-                item.AddItemToWorksheet(worksheet);
+                item.Row = item.Row > 0 && i != item.Row ? item.Row : i;
+                result = item.AddItemToWorksheet(worksheet);
+                i++;
             }
+            // The final address
+            return result;
         }
     }
 }

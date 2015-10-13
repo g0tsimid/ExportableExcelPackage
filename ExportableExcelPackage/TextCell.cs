@@ -19,11 +19,11 @@ namespace ExportableExcelPackage
         [Category("Appearance")]
         [DefaultValue(null)]
         [Localizable(true)]
-        public decimal? Text
+        public string Text
         {
             get
             {
-                return ViewState["Text"] as decimal?;
+                return ViewState["Text"] as string;
             }
 
             set

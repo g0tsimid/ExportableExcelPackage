@@ -12,7 +12,7 @@ namespace ExportableExcelPackage
     /// <summary>
     /// A base interface for an item than can appear on a worksheet.
     /// </summary>
-    public abstract class WorksheetItem : WebControl 
+    public abstract class WorksheetItem : WebControl
     {
         /// <summary>
         /// The 0-based row number for the top-left position of the item, if applicable.

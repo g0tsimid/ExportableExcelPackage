@@ -48,13 +48,16 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExcelPackage.cs" />
+    <Compile Include="WorksheetTable.cs" />
+    <Compile Include="TextCell.cs" />
     <Compile Include="WorksheetItem.cs" />
-    <Compile Include="ItemCollection.cs" />
+    <Compile Include="WorksheetItemCollection.cs" />
     <Compile Include="NumberCell.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="WorksheetRow.cs" />
     <Compile Include="Worksheet.cs" />
     <Compile Include="WorksheetCollection.cs" />
+    <Compile Include="WorksheetTableGrid.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
