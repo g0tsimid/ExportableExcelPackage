@@ -111,7 +111,10 @@ namespace ExportableExcelPackage
         {
             if (RenderHtml)
             {
-                output.Write("<h1>Rendered</h1>");
+                foreach (Worksheet worksheet in Worksheets)
+                {
+                    worksheet.RenderControl(output);
+                }
             }
         }
 

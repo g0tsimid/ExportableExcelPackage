@@ -14,15 +14,16 @@ namespace ExportableExcelPackage
     [ToolboxData("<{0}:WorksheetTableGrid runat=server></{0}:WorksheetTableGrid>")]
     public class WorksheetTableGrid : CompositeDataBoundControl, INamingContainer
     {
-        private List<WorksheetItem> columns;
-        private List<WorksheetRow> rows;
+        private List<WorksheetTableDataHeaderItem> columns;
+        private List<WorksheetTableRow> rows;
         /// <summary>
         /// The collection of columns contained in this grid.
         /// </summary>
-        public List<WorksheetItem> Columns {
+        public List<WorksheetTableDataHeaderItem> Columns
+        {
             get
             {
-                return columns ?? (columns = new List<WorksheetItem>());
+                return columns ?? (columns = new List<WorksheetTableDataHeaderItem>());
             }
             set
             {
@@ -30,11 +31,11 @@ namespace ExportableExcelPackage
             }
         }
 
-        public virtual List<WorksheetRow> Rows
+        public virtual List<WorksheetTableRow> Rows
         {
             get
             {
-                return rows ?? (rows = new List<WorksheetRow>());
+                return rows ?? (rows = new List<WorksheetTableRow>());
             }
         }
 
@@ -54,16 +55,18 @@ namespace ExportableExcelPackage
             {
                 foreach (object dataItem in dataSource)
                 {
-                    WorksheetRow row = new WorksheetRow();
-                    row.DataItem = dataItem;
-                    foreach (WorksheetItem item in Columns)
+                    WorksheetTableRow row = new WorksheetTableRow();
+                    foreach (WorksheetTableDataHeaderItem item in Columns)
                     {
-                        item.DataItem = dataItem;
-                        item.DataItemIndex = count++;
-                        item.DisplayIndex = item.DataItemIndex;
-                        row.Items.Add(item);
-                        item.DataBind();
+                        WorksheetTableDataItem rowItem = new WorksheetTableDataItem();
+
+                        rowItem.DataItem = dataItem;
+                        rowItem.DataItemIndex = count++;
+                        rowItem.DisplayIndex = item.DataItemIndex;
+                        rowItem.DataBind();
+                        row.Add(rowItem);
                     }
+                    Rows.Add(row);
                 }
             }
             

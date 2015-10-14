@@ -47,8 +47,9 @@
     <Reference Include="System.Web" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataSourceContainer.cs" />
     <Compile Include="ExcelPackage.cs" />
-    <Compile Include="WorksheetTable.cs" />
+    <Compile Include="IWorksheetItem.cs" />
     <Compile Include="TextCell.cs" />
     <Compile Include="WorksheetItem.cs" />
     <Compile Include="WorksheetItemCollection.cs" />
@@ -57,7 +58,12 @@
     <Compile Include="WorksheetRow.cs" />
     <Compile Include="Worksheet.cs" />
     <Compile Include="WorksheetCollection.cs" />
+    <Compile Include="WorksheetTable.cs" />
+    <Compile Include="WorksheetTableColumn.cs" />
+    <Compile Include="WorksheetTableDataHeaderItem.cs" />
+    <Compile Include="WorksheetTableDataItem.cs" />
     <Compile Include="WorksheetTableGrid.cs" />
+    <Compile Include="WorksheetTableRow.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
